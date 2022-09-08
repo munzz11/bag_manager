@@ -100,6 +100,8 @@ int main(int argc, char *argv[])
   {
     if (*arg == "-h")
     {
+      std::cout << "bag_merge [.bag #1] [.bag #2]" << std::endl;
+      std::cout << " " << std::endl;
       std::cout << "-o, --output Output bag file name" << std::endl;
       std::cout << "-c, --compression Compression format: none, lz4 or bz2 (default lz4)" << std::endl;
       std::cout << "-p, --progress Display progress" << std::endl;
@@ -112,6 +114,9 @@ int main(int argc, char *argv[])
       std::cout << "-t, --topic Topic filtering config file" << std::endl;
       std::cout << "-d, --default Default include or exclude, MUST be used when compunding includes and excludes present" << std::endl;
       std::cout << "-h, --help Display this message" << std::endl;
+      std::cout << " " << std::endl;
+      std::cout << "Example: bag_merge test.bag /home/user/Desktop/test2.bag -o test_merge.bag -c none -i /project11/test_topic" << std::endl;
+      std::cout << "Example: bage_merge 22_01_24_*.bag -p -s 2022-01-24-12:15:00 -e 2022-01-24-16:14:00 -o 22_01_24_trimmed.bag" << std::endl;
       return -1;
     }
     else if (*arg == "-o")
