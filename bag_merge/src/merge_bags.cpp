@@ -11,6 +11,7 @@
 // -p, --progress Display progress
 // -s, --start_time Skip messages earlier than start time
 // -e, --end_time Skip messages later than end time
+// -x, --exclude Exclude a topic, may be repeated
 // -h, --help Display this message
 
 std::map<std::string, bool> exclude_map;
