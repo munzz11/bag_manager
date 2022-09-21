@@ -17,13 +17,15 @@ def mkdir(string):
                 os.mkdir(direct)
                 print('Created: ' + direct)
             except FileExistsError:
-                print(' ')
+                # Captured second message of same type. Continue quietly.
+                pass
     return(direct)
 
 
 def main():
     global base_path
     base_path = 'workspace' #base folder location, defaults to 'workspace' in working directory
+    msgs = {}
     types = {}
 
     parser = argparse.ArgumentParser(description='Read, analyze and build temp workspaces containing .msg definitions from a ROS .bag file,.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -55,27 +57,29 @@ def main():
         
         bag = rosbag.Bag(bagname)
         for topic, msg, t in bag.read_messages():
-            types[msg._type] = msg._full_text 
+            msgs[topic] = [msg._type, msg._full_text]
+            #types[msg._type] = msg._full_text 
 
     if args.w:
         try:
             os.mkdir(base_path)
         except FileExistsError:
-            print()
+            pass
 
-    for t in types:
+    for m in msgs:
 
         # Print msg def to std out #
         if args.v:
-            print ("Message type:", t)
+            print ("Topic: %s" % m)
+            print ("Message type: %s", msgs[m][0])
             print ("Message text:")
-            print (types[t])
-            print ()
+            print (msgs[m][1])
+            print ("----------------------")
         ############################
         if args.w:
-            direct = mkdir(t)
+            direct = mkdir(msgs[m][0])
             f = open(direct + '.msg', 'w+')
-            lines = types[t].split('MSG: ',-1)
+            lines = msgs[m][1].split('MSG: ',-1)
             first = True
             for x in lines:
                 if first:
