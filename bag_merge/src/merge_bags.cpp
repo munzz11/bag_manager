@@ -1,10 +1,11 @@
 #include <rosbag/bag.h>
 #include <rosbag/view.h>
 #include <rosbag/query.h>
+#include <bits/stdc++.h>
 #include "progressbar.hpp"
 #include <ctime>
 #include <iostream>
-
+using namespace std;
 
 // -o, --output Output bag file
 // -c, --compression Compression format: none, lw4 or bz2 (default lw4)
@@ -80,6 +81,8 @@ int main(int argc, char *argv[])
   bool progress = false;
   ros::Time start = ros::TIME_MIN; 
   ros::Time end = ros::TIME_MAX;
+  bool decimate = true;
+  //std::pair<std::char, std::int>> pairs;
   
 //#############################################
 
@@ -302,18 +305,20 @@ int main(int argc, char *argv[])
 
   size = merged_view.size();
   std::vector<const rosbag::ConnectionInfo *> connection_infos = merged_view.getConnections();
-  std::set<std::string> topics;
+  set < pair < string , double > > s;
+  
   for (const rosbag::ConnectionInfo* info: connection_infos) 
   {
-  topics.insert(info->topic);
+    s.insert({info->topic, 0.0});
   }
 
   if (progress == true)
   {
     std::cout << "Merging topics: " << std::endl;
-    for (auto it: topics)
+    set < pair < string , double > > :: iterator it;
+    for(it=s.begin();it!=s.end();it++)
     {
-      std::cout << ' ' << it << std::endl;
+      cout<< it->first << " " << it->second <<endl;
     }
   }
  
@@ -328,7 +333,29 @@ int main(int argc, char *argv[])
     }
     try
     {
-      outbag.write(m.getTopic(), m.getTime(), m, m.getConnectionHeader());
+      if (decimate == true) 
+      {
+        set < pair < string , double > > :: iterator it;
+        for(it=s.begin();it!=s.end();it++)
+        {
+          if (m.getTopic() == it->first) 
+          {
+            double time = m.getTime().toSec();
+            double dif = time - (it->second);
+            if (dif >= 1.0)
+            { 
+              s.erase(it);
+              s.insert({m.getTopic(), time});
+              outbag.write(m.getTopic(), m.getTime(), m, m.getConnectionHeader());
+              break;
+            }
+          }
+        }
+      }
+      else 
+      {
+        outbag.write(m.getTopic(), m.getTime(), m, m.getConnectionHeader());
+      }
     }
     catch (const std::exception& e)
     {
