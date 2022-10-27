@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
   bool progress = false;
   ros::Time start = ros::TIME_MIN; 
   ros::Time end = ros::TIME_MAX;
-  bool decimate = true;
+  bool decimate = false;
   //std::pair<std::char, std::int>> pairs;
   
 //#############################################
@@ -117,7 +117,8 @@ int main(int argc, char *argv[])
       std::cout << "-dx, --exclude Exclude any topic with the given data type, may be repeated" << std::endl;
       std::cout << "-di, --include Include any topic with the given data type, may be repeated" << std::endl;
       std::cout << "-t, --topic Topic filtering config file" << std::endl;
-      std::cout << "-d, --default Default include or exclude, MUST be used when compunding includes and excludes present" << std::endl;
+      std::cout << "-d, --default Default include or exclude, MUST be used when compunding includes and excludes present: i - include, x - exclude" << std::endl;
+      std::cout << "-de --decimate Decimate all topics to 1hz" << std::endl; 
       std::cout << "-h, --help Display this message" << std::endl;
       std::cout << " " << std::endl;
       std::cout << "Example: bag_merge test.bag /home/user/Desktop/test2.bag -o test_merge.bag -c none -i /project11/test_topic" << std::endl;
@@ -230,6 +231,10 @@ int main(int argc, char *argv[])
           std::cout << "[INFO] excluding topics with datatype: " << *arg << std::endl;
         } 
       }  
+    }
+    else if (*arg == "-de")
+    {
+      decimate = true; 
     }
 
 //################ Read in all non-args as paths to bags ###################
