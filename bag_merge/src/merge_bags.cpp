@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 
   if (arguments.empty()) 
   {
-    std::cout << "usage: merge_bags [-o filename] [-c compression] [-ph] [-s time] [-e time] [-x topic] [-i topic] [-dx datatype] [-ix datatype] [-d x | i] bagfile" << std::endl;
+    std::cout << "usage: merge_bags [-o filename] [-c compression] [-ph] [-s time] [-e time] [-x topic] [-i topic] [-dx datatype] [-ix datatype] [-d x | i] [-de]  bagfile" << std::endl;
     std::cout << "[ERROR]: No args, -h for help"<< std::endl;
     return -1;
   }
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
   {
     if (*arg == "-h")
     {
-      std::cout << "usage: merge_bags [-o filename] [-c compression] [-ph] [-s time] [-e time] [-x topic] [-i topic] [-dx datatype] [-ix datatype] [-d x | i] bagfile" << std::endl;
+      std::cout << "usage: merge_bags [-o filename] [-c compression] [-ph] [-s time] [-e time] [-x topic] [-i topic] [-dx datatype] [-ix datatype] [-d x | i]  [-de] bagfile" << std::endl;
       std::cout << " " << std::endl;
       std::cout << "-o, --output Output bag file name" << std::endl;
       std::cout << "-c, --compression Compression format: none, lz4 or bz2 (default lz4)" << std::endl;
