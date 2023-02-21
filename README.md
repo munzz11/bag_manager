@@ -23,7 +23,7 @@ This has been done in python before, however when merging large bags it can be q
 
 ## Installation
 Bag_merge is structured to be a ROS package as it was originally intended to be run on vehicle to streamline ROS bag export, its only been testing with noetic on Ubuntu 20.04. 
-If you're merging bag files, chances are you have a ROS worksapce setup but in the chance you don't heres a guide: http://wiki.ros.org/noetic/Installation
+If you're merging bag files, chances are you have a ROS workspace setup but in the chance you don't heres a guide: http://wiki.ros.org/noetic/Installation
 1. `git clone https://github.com/munzz11/bag_pro.git` into an existing ROS workspace
 2. Compile ROS workspace
 3. Add to path if you want to call from elsewhere. Example: (`export PATH=$PATH:~/project11/catkin_ws/devel/lib/bag_manager/`)
